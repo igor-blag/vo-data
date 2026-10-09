@@ -252,6 +252,9 @@ button:hover { background-color:#f36f0322; color:black; }
                     </tbody>
                 </table>
               </div>
+              <?php if (isset($class_cutoffs[$class_grade])) : ?>
+                  <p class="vo-passing-score rt" style="font-weight:600; margin:4px 0 0;">Проходной балл на районный этап: <?php echo esc_html($class_cutoffs[$class_grade]); ?></p>
+              <?php endif; ?>
             <?php endforeach; ?>
         <?php endif; ?>
         

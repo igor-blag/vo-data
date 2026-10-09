@@ -136,6 +136,23 @@ function vo_data_render_results_shortcode($atts) {
     $results_by_class = [];
     foreach ($results_data as $row) { $results_by_class[$row->class_grade][] = $row; }
 
+    // --- Проходной балл на районный этап по каждой параллели (минимум среди прошедших) ---
+    // Считаем по полному набору данных предмета и года, невзирая на фильтры школы/класса.
+    $class_cutoffs = [];
+    if ($current_stage_slug === 'school_stage') {
+        $cutoff_rows = $wpdb->get_results($wpdb->prepare(
+            "SELECT r.class_grade, MIN(CAST(r.school_level_score AS SIGNED)) AS min_score
+             FROM $results_table r
+             WHERE r.subject_id = %d AND r.academic_year = %d
+               AND r.school_level_score != '' AND r.school_level_score IS NOT NULL
+             GROUP BY r.class_grade",
+            $subject_id, $academic_year
+        ));
+        foreach ($cutoff_rows as $cutoff_row) {
+            $class_cutoffs[(int) $cutoff_row->class_grade] = (int) $cutoff_row->min_score;
+        }
+    }
+
     // --- Блок 5: Передача данных в шаблон ---
     $has_regional_qualifiers = false;
     if ($current_stage_slug === 'regional_stage') {
@@ -146,6 +163,7 @@ function vo_data_render_results_shortcode($atts) {
     $template_data = [
         'subject_name' => $subject_name, 'academic_year' => $academic_year, 'current_stage' => $current_stage_slug,
         'results_by_class' => $results_by_class, 'has_regional_qualifiers' => $has_regional_qualifiers,
+        'class_cutoffs' => $class_cutoffs,
         'filters' => [ 'schools' => $available_schools, 'classes' => $available_classes, 'selected_school' => $selected_school_id, 'selected_class' => $selected_class ]
     ];
 
