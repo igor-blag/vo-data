@@ -252,10 +252,23 @@ button:hover { background-color:#f36f0322; color:black; }
                     </tbody>
                 </table>
               </div>
-              <?php if (isset($class_cutoffs[$class_grade])) : ?>
-                  <p class="vo-passing-score rt" style="font-weight:600; margin:4px 0 0;">Проходной балл на районный этап: <?php echo esc_html($class_cutoffs[$class_grade]); ?></p>
-              <?php endif; ?>
             <?php endforeach; ?>
+
+            <?php if (!empty($class_cutoffs)) : ?>
+                <div class="vo-passing-scores" style="margin-top: 28px; border: 1px solid #000; display: inline-block; padding: 12px 18px;">
+                    <strong style="display:block; margin-bottom: 8px;">Проходной балл на районный этап</strong>
+                    <table style="border-collapse: collapse;">
+                        <tbody>
+                            <?php foreach ($class_cutoffs as $cutoff_class => $cutoff_score) : ?>
+                                <tr>
+                                    <td style="padding: 2px 16px 2px 0;"><?php echo esc_html($cutoff_class); ?> класс</td>
+                                    <td style="padding: 2px 0; text-align: right;"><strong><?php echo esc_html($cutoff_score); ?></strong></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
         
         <?php if ($show_school_score_col) : ?>

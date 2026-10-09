@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VO Data
  * Description: Плагин для публикации и отображения информации об участии во всероссийской олимпиаде школьников.
- * Version: 2.7.1 (Passing score per class on school-stage list)
+ * Version: 2.7.2 (Passing score summary per class on school-stage list)
  * Author: IgB
  */
 
@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) exit;
 define('VO_DATA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 // Версия плагина. Используется для автосброса кэша при обновлении файлов.
-define('VO_DATA_VERSION', '2.7.1');
+define('VO_DATA_VERSION', '2.7.2');
 
 // Время жизни кэша публичных шорткодов (сек). Увеличено до 48 часов:
 // импорт и так инвалидирует кэш через версию кэша.

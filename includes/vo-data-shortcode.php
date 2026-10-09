@@ -151,6 +151,7 @@ function vo_data_render_results_shortcode($atts) {
         foreach ($cutoff_rows as $cutoff_row) {
             $class_cutoffs[(int) $cutoff_row->class_grade] = (int) $cutoff_row->min_score;
         }
+        ksort($class_cutoffs);
     }
 
     // --- Блок 5: Передача данных в шаблон ---
